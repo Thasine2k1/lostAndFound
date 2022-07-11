@@ -92,7 +92,7 @@ public class CreateController extends HttpServlet {
                 }
             }
             ArticleDAO dao = new ArticleDAO();
-            ArticleDTO article = new ArticleDTO(0, aricleContent, fileName, "", locationID, memberID, articleTypeID, itemID, "", "", 0, "", "", "", "");
+            ArticleDTO article = new ArticleDTO(0, aricleContent, fileName, "", locationID, memberID, articleTypeID, itemID, "", "", 0, "", "", "", "",0);
             boolean checkCreate = dao.createArticle(article);
             if (checkCreate) {
                 request.setAttribute("SUCCESS_CREATE_MESSAGE", article);
@@ -104,6 +104,7 @@ public class CreateController extends HttpServlet {
                     String fullName = listArticle.getFullName();
                     int articleID = listArticle.getArticleID();
                     int sensorID = listArticle.getMemberID();
+<<<<<<< HEAD
                     NotificationDAO notiDAO = new NotificationDAO();
                     //sensor thằng có items mình cần
                     // memberID là mình login zô
@@ -113,6 +114,19 @@ public class CreateController extends HttpServlet {
 //                        request.setAttribute("LIST_NOTI_ARTICLE_FIND", listNotiArticlefind);
 //                        url = SUCCESS;
 //                    }
+=======
+                    String picture = listArticle.getPicture();
+                    NotificationDAO notiDAO = new NotificationDAO();
+                    //sensor thằng có items mình cần
+                    // memberID là mình login zô
+                    if (sensorID != memberID) {
+                        NotificationDTO noti = new NotificationDTO(0, "might be in the middle of an item you lost", memberID, sensorID, articleID, fullName, picture);
+                        boolean checkCreateNoti = notiDAO.NotificationArticle(noti);
+                        NotificationDTO noti2 = new NotificationDTO(0, "can may be found the map that you are picked", sensorID, memberID, articleID, fullName, picture);
+                        boolean checkCreateNoti2 = notiDAO.NotificationArticle(noti2);
+                            url = SUCCESS;
+                    }
+>>>>>>> 09c24eee77247cb3c09a80eaabbd64b998a99f7f
                 }
             } else {
                 List<ArticleDTO> listNotiArticleLost = new ArticleDAO().getArticlebyArticleTypeLocationItems2(itemID, locationID);
@@ -120,6 +134,7 @@ public class CreateController extends HttpServlet {
                     String fullName = listArticle.getFullName();
                     int articleID = listArticle.getArticleID();
                     int sensorID = listArticle.getMemberID();
+<<<<<<< HEAD
                     NotificationDAO notiDAO = new NotificationDAO();
                     NotificationDTO noti = new NotificationDTO(0, "can may be found the map that you are picked", memberID, sensorID, fullName);
                     boolean checkCreateNoti = notiDAO.NotificationArticle(noti);
@@ -127,6 +142,17 @@ public class CreateController extends HttpServlet {
 //                        request.setAttribute("LIST_NOTI_ARTICLE_Lost", listNotiArticleLost);
 //                        url = SUCCESS;
 //                    }
+=======
+                    String picture = listArticle.getPicture();
+                    NotificationDAO notiDAO = new NotificationDAO();
+                    if (sensorID != memberID) {
+                        NotificationDTO noti = new NotificationDTO(0, "can may be found the map that you are picked", memberID, sensorID, articleID, fullName, picture);
+                        boolean checkCreateNoti = notiDAO.NotificationArticle(noti);
+                        NotificationDTO noti2 = new NotificationDTO(0, "might be in the middle of an item you lost", sensorID, memberID, articleID, fullName, picture);
+                        boolean checkCreateNoti2 = notiDAO.NotificationArticle(noti2);
+                            url = SUCCESS;
+                    }
+>>>>>>> 09c24eee77247cb3c09a80eaabbd64b998a99f7f
                 }
             }
         } catch (Exception e) {

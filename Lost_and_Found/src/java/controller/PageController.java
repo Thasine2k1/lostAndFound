@@ -29,6 +29,7 @@ public class PageController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+<<<<<<< HEAD
         HttpSession session = request.getSession();
         MemberDTO memberLogin = (MemberDTO) session.getAttribute("LOGIN_MEMBER");
 
@@ -42,10 +43,34 @@ public class PageController extends HttpServlet {
 //                session.setAttribute("LIST_NOTIFICATION", listNotificationArticleFind);
                 url = SUCCESS;
             } 
+=======
+        try {
+            HttpSession session = request.getSession();
+            MemberDTO memberLogin = (MemberDTO) session.getAttribute("LOGIN_MEMBER");
+//            int memberID = memberLogin.getId();
+//            MemberDAO memberDao = new MemberDAO();
+            if (memberLogin != null) {
+                List<NotificationDTO> listNotification = new NotificationDAO().getListNotification(memberLogin.getId());
+                session.setAttribute("LIST_NOTIFICATION", listNotification);
+                List<NotificationDTO> listNotificationSeen = new NotificationDAO().getListSeenNoti(memberLogin.getId());
+                session.setAttribute("LIST_NOTIFICATION_SEEN", listNotificationSeen);
+
+            }
+>>>>>>> 09c24eee77247cb3c09a80eaabbd64b998a99f7f
             List<ArticleDTO> listLostArticles = new ArticleDAO().getLostArticles();
             request.setAttribute("LIST_LOST_ARTICLE", listLostArticles);
             List<ArticleDTO> listPickedArticles = new ArticleDAO().getPickedArticles();
             request.setAttribute("LIST_PICKED_ARTICLE", listPickedArticles);
+<<<<<<< HEAD
+=======
+//            List<NotificationDTO> listNotification = new NotificationDAO().getListNotification(memberLogin.getId());
+//            session.setAttribute("LIST_NOTIFICATION", listNotification);
+//            List<NotificationDTO> listNotificationSeen = new NotificationDAO().getListSeenNoti(memberLogin.getId());
+//            session.setAttribute("LIST_NOTIFICATION_SEEN", listNotificationSeen);
+//            
+//            List<NotificationDTO> listNotificationArticleFind = new NotificationDAO().getListNotificationArticleFind(memberID);
+//            session.setAttribute("LIST_NOTIFICATION_ARTICLE_FIND", listNotificationArticleFind);
+>>>>>>> 09c24eee77247cb3c09a80eaabbd64b998a99f7f
             url = SUCCESS;
         } catch (Exception e) {
             log("Error at PageController" + e.toString());
