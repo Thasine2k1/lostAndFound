@@ -6,6 +6,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javatutorials.javamail.JavaMailUtil;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +25,8 @@ public class DeleteMemberByAdminController2 extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String  email = request.getParameter("email");
+        String fullName = request.getParameter("fullName");
         try {
 //            String memberID = request.getParameter("memberID");
 
@@ -31,6 +34,7 @@ public class DeleteMemberByAdminController2 extends HttpServlet {
 
             MemberDAO dao = new MemberDAO();
             boolean check = dao.deleteMember(memberID);
+            JavaMailUtil.sendMailBanMember(email,fullName);
         } catch (Exception e) {
         } finally {
             request.getRequestDispatcher("ReportMemberController").forward(request, response);
